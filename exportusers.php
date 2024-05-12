@@ -1,49 +1,54 @@
 <?php
-include 'db/database.php';
-require 'vendor/autoload.php'; // Подключение PhpSpreadsheet
+// Remove any output or whitespace before this line
+include 'db/db.php';
+require 'vendor/autoload.php'; // Include PhpSpreadsheet
 
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
-// READ (Чтение записей)
-$result = $conn->query("SELECT * FROM users Order by id");
+// Set character encoding
+$mysqli->set_charset("utf8");
 
+// READ (Read records)
+$result = $mysqli->query("SELECT * FROM users Order by id");
 
 if ($result->num_rows > 0) {
-    // Создание нового объекта Spreadsheet
+    // Create a new Spreadsheet object
     $spreadsheet = new Spreadsheet();
     $sheet = $spreadsheet->getActiveSheet();
 
-    // Заголовки столбцов
+    // Column headers
     $sheet->setCellValue('A1', 'ID');
-    $sheet->setCellValue('B1', 'Full Name');
+    $sheet->setCellValue('B1', 'Name');
     $sheet->setCellValue('C1', 'Email');
     $sheet->setCellValue('D1', 'Age');
+    $sheet->setCellValue('E1', 'City');
 
-    $row = 2; // Начало данных со второй строки
+    $row = 2; // Start data from the second row
 
     while ($data = $result->fetch_assoc()) {
         $sheet->setCellValue('A' . $row, $data['id']);
-        $sheet->setCellValue('B' . $row, $data['full_name']);
+        $sheet->setCellValue('B' . $row, $data['name']);
         $sheet->setCellValue('C' . $row, $data['email']);
         $sheet->setCellValue('D' . $row, $data['age']);
+        $sheet->setCellValue('E' . $row, $data['city']);
         $row++;
     }
 
-    // Создание объекта Xlsx Writer
+    // Create Xlsx Writer object
     $writer = new Xlsx($spreadsheet);
 
-    // Установка заголовков для скачивания
+    // Set headers for downloading
     header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
     header('Content-Disposition: attachment;filename="users.xlsx"');
     header('Cache-Control: max-age=0');
 
-    // Сохранение файла в вывод
+    // Save the file to output
     $writer->save('php://output');
 
 } else {
     echo "0 results";
 }
 
-$conn->close();
+$mysqli->close();
 ?>

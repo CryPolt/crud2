@@ -1,5 +1,5 @@
 <?php
-include 'db/database.php';
+include 'db/db.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["create"])) {
     
@@ -9,15 +9,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["create"])) {
 
     $sql = "INSERT INTO users_auth (full_name, email, age) VALUES ('$full_name','$email', '$age')";
 
-    if ($conn->query($sql) === TRUE) {
+    if ($mysqli->query($sql) === TRUE) {
         echo "Registration successful. You can now <a href='login.php'>login</a>.";
     } else {
-        echo "Error: " . $sql . "<br>" . $conn->error;
+        echo "Error: " . $sql . "<br>" . $mysqli->error;
     }
 }
 
 
-$conn->close();
+$mysqli->close();
 ?>
 
 <h2>Registration</h2>

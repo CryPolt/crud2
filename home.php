@@ -21,10 +21,10 @@
 
 
 <?php
-include 'db/database.php';
+include 'db/db.php';
 
 // READ (Чтение записей)
-$result = $conn->query("SELECT * FROM users Order by id");
+$result = $mysqli->query("SELECT * FROM users Order by id");
 
 
 if ($result->num_rows > 0) {
@@ -43,7 +43,7 @@ if ($result->num_rows > 0) {
 }
 echo '<br>';
 // READ (Чтение записей)
-$result = $conn->query("SELECT * FROM user2 Order by id");
+$result = $mysqli->query("SELECT * FROM user2 Order by id");
 
 
 if ($result->num_rows > 0) {
@@ -64,7 +64,7 @@ if ($result->num_rows > 0) {
 echo '<br>';
 
 // READ (Чтение записей)
-$result = $conn->query("SELECT * FROM users Order by id");
+$result = $mysqli->query("SELECT * FROM users Order by id");
 
 
 if ($result->num_rows > 0) {
@@ -84,5 +84,5 @@ if ($result->num_rows > 0) {
 
 
 
-$conn->close();
+$mysqli->close();
 ?>

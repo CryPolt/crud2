@@ -1,12 +1,12 @@
 <?php
-include 'db/database.php';
+include 'db/db.php';
 require 'vendor/autoload.php'; // Подключение PhpSpreadsheet
 
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 // READ (Чтение записей)
-$result = $conn->query("SELECT * FROM users union select * from user2 union select * from users_auth Order by id");
+$result = $mysqli->query("SELECT * FROM users union select * from user2 union select * from users_auth Order by id");
 
 
 if ($result->num_rows > 0) {
@@ -45,5 +45,5 @@ if ($result->num_rows > 0) {
     echo "0 results";
 }
 
-$conn->close();
+$mysqli->close();
 ?>

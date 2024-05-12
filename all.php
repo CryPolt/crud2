@@ -1,8 +1,8 @@
 <?php
-include 'db/database.php';
+include 'db/db.php';
 
 // READ (Чтение записей)
-$result = $conn->query("SELECT * FROM users union select * from user2 union select * from users_auth Order by id");
+$result = $mysqli->query("SELECT * FROM users union select * from user2 union select * from users_auth Order by id");
 
 
 if ($result->num_rows > 0) {
@@ -22,7 +22,7 @@ if ($result->num_rows > 0) {
     echo "0 results";
 }
 
-$conn->close();
+$mysqli->close();
 ?>
 
 <a href="all.php">All Users</a>

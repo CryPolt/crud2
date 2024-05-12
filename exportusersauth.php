@@ -1,12 +1,12 @@
 <?php
-include 'db/database.php';
+include 'db/db.php';
 require 'vendor/autoload.php'; // Подключение PhpSpreadsheet
 
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 // READ (Чтение записей)
-$result = $conn->query("SELECT * FROM users_auth Order by id");
+$result = $mysqli->query("SELECT * FROM users Order by id");
 
 
 if ($result->num_rows > 0) {
@@ -16,7 +16,7 @@ if ($result->num_rows > 0) {
 
     // Заголовки столбцов
     $sheet->setCellValue('A1', 'ID');
-    $sheet->setCellValue('B1', 'Full Name');
+    $sheet->setCellValue('B1', 'Name');
     $sheet->setCellValue('C1', 'Email');
     $sheet->setCellValue('D1', 'Age');
 
@@ -24,7 +24,7 @@ if ($result->num_rows > 0) {
 
     while ($data = $result->fetch_assoc()) {
         $sheet->setCellValue('A' . $row, $data['id']);
-        $sheet->setCellValue('B' . $row, $data['full_name']);
+        $sheet->setCellValue('B' . $row, $data['name']);
         $sheet->setCellValue('C' . $row, $data['email']);
         $sheet->setCellValue('D' . $row, $data['age']);
         $row++;
@@ -45,5 +45,5 @@ if ($result->num_rows > 0) {
     echo "0 results";
 }
 
-$conn->close();
+$mysqli->close();
 ?>

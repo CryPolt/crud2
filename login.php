@@ -1,11 +1,11 @@
 <?php
-include 'db/database.php';
+include 'db/db.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["login"])) {
     $username = $_POST["username"];
     $password = $_POST["password"];
 
-    $result = $conn->query("SELECT * FROM users_auth WHERE username='$username'");
+    $result = $mysqli->query("SELECT * FROM users_auth WHERE username='$username'");
 
     if ($result->num_rows == 1) {
         $row = $result->fetch_assoc();
@@ -19,7 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["login"])) {
     }
 }
 
-$conn->close();
+$mysqli->close();
 ?>
 
 <h2>Login</h2>

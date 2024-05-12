@@ -1,5 +1,5 @@
 <?php
-include 'db/database.php';
+include 'db/db.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["update_all"])) {
     $id = $_POST["id"];
@@ -11,17 +11,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["update_all"])) {
     
     
 
-    if ($conn->query($sql) === TRUE) {
+    if ($mysqli->query($sql) === TRUE) {
         header("Location: all.php");
         exit();
     } else {
-        echo "Error updating record: " . $conn->error;
+        echo "Error updating record: " . $mysqli->error;
     }
 }
 
 if (isset($_GET["id"])) {
     $id = $_GET["id"];
-    $result = $conn->query("SELECT * FROM users union select * from user2 union select * from users_auth Order by id");
+    $result = $mysqli->query("SELECT * FROM users union select * from user2 union select * from users_auth Order by id");
 
     if ($result->num_rows == 1) {
         $row = $result->fetch_assoc();
@@ -44,5 +44,5 @@ if (isset($_GET["id"])) {
     }
 }
 
-$conn->close();
+$mysqli->close();
 ?>
