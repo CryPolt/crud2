@@ -1,8 +1,12 @@
 <?php
-include 'db/db.php';
+require_once './db/db.php';
 
+use DB\db;
 // READ (Чтение записей)
-$result = $mysqli->query("SELECT * FROM users union select * from user2 union select * from users_auth Order by id");
+$result = $db->query(
+        "SELECT * FROM users 
+               union select * from users_history 
+               Order by id");
 
 
 if ($result->num_rows > 0) {
@@ -12,7 +16,7 @@ if ($result->num_rows > 0) {
 
     while ($row = $result->fetch_assoc()) {
         echo "<tr>";
-        echo "<td>{$row['id']}</td><td>{$row['full_name']}</td><td>{$row['email']}</td><td>{$row['age']}</td>";
+        echo "<td>{$row['id']}</td><td>{$row['name']}</td><td>{$row['email']}</td><td>{$row['age']}</td>";
         echo "<td><a href='update_all.php?id={$row['id']}'>Edit</a> | <a href='delete.php?id={$row['id']}'>Delete</a></td>";
         echo "</tr>";
     }
@@ -22,10 +26,10 @@ if ($result->num_rows > 0) {
     echo "0 results";
 }
 
-$mysqli->close();
+$db->close();
 ?>
 
 <a href="all.php">All Users</a>
-<a href="auth.php">Auth Users</a>
+<a href="history.php">History Users</a>
 <a href="index.php">Users Table</a>
-<a href="export.php">EXPORT FROM EXCEL</a>
+<a href="export/exportall.php">EXPORT FROM EXCEL</a>
