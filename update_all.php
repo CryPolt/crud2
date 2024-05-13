@@ -30,7 +30,7 @@ if (isset($_GET["id"])) {
         $age = $row["age"];
         echo "
         <h2>Edit User</h2>
-        <form method='post' action='update.php'>
+        <form method='post' action='crud/update.php'>
             <input type='hidden' name='id' value='$id'>
             <label for='full_name'>Full Name:</label>
             <input type='text' name='full_name' value='$full_name' required>
