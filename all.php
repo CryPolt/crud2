@@ -23,7 +23,7 @@ if ($result->num_rows > 0) {
 
     echo "</table>";
 } else {
-    echo "0 results";
+    echo "<br>" .$db->connected();
 }
 
 $db->close();
@@ -31,5 +31,5 @@ $db->close();
 
 <a href="all.php">All Users</a>
 <a href="history.php">History Users</a>
-<a href="index.php">Users Table</a>
+<a href="crud/index.php">Users Table</a>
 <a href="export/exportall.php">EXPORT FROM EXCEL</a>
