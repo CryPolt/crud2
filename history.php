@@ -20,12 +20,12 @@ if ($result->num_rows > 0) {
 
     echo "</table>";
 } else {
-    echo "0 results";
+    echo "<br>" .$db->connected();
 }
 
 $db->close();
 ?>
 
 <a href="all.php">All Users</a>
-<a href="index.php">Users Table</a>
+<a href="crud/index.php">Users Table</a>
 <a href="export/exportusershistory.php">EXPORT FROM EXCEL</a>

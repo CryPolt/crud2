@@ -1,8 +1,10 @@
 <?php
+
+namespace create;
 require_once '../db/db.php';
 use DB\db;
 
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["create"])) {
+    if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["create"])) {
     $name = $_POST["name"];
     $email = $_POST["email"];
     $age = $_POST["age"];
@@ -22,17 +24,43 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["create"])) {
         echo "Error: " . $sqlhistory . "<br>" . $db->error();
     }
 }
+    $db->close();
 
-$db->close();
-?>
+echo'
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../styles/create.css">
+    <title>create</title>
+</head>
+<body>
 
-<h2>Add User</h2>
-<form method="post" action="create.php">
-    <label for="name">Full Name:</label>
-    <input type="text" name="name" required>
-    <label for="email">Email:</label>
-    <input type="email" name="email" required>
-    <label for="age">Age:</label>
-    <input type="number" name="age" required>
-    <input type="submit" name="create" value="Add User">
-</form>
+<div class="registration-form">
+    <form method="post" action="create.php">
+        <h3 class="text-center">Create your account</h3>
+        <div class="form-group">
+            <input class="form-control item" type="text" name="name" maxlength="15" minlength="4" pattern="^[a-zA-Z0-9_.-]*$" id="username" placeholder="Username" required>
+        </div>
+        <div class="form-group">
+            <input class="form-control item" type="email" name="email" minlength="6" id="email" placeholder="email" required>
+        </div>
+        <div class="form-group">
+            <input class="form-control item" type="number" name="age" id="age" placeholder="age" required>
+        </div>
+        <div class="form-group">
+            <button class="btn btn-primary btn-block create-account" name="create" type="submit">Create Account</button>
+        </div>
+    </form>
+</div>
+
+
+</body>
+</html>
+';
+
+
+

@@ -32,8 +32,15 @@ class db {
     public function error() {
         return $this->mysqli->error;
     }
+
+    public function connected()
+    {
+        return "Connected successfully";
+    }
 }
 
 $db = new db("localhost", "crypolt", "root", "crudphp");
+
+
 
 ?>
