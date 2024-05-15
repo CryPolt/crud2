@@ -12,8 +12,12 @@ services:
     command: php -S 0.0.0.0:8000 -t /app
 
 
+
   db:
     image: mysql
+    ports:
+      - "3306:3306"
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: root
+      - MYSQL_ROOT_PASSWORD:root
+      - MYSQL_USER=root

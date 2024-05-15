@@ -1,6 +1,7 @@
 <?php
-$config = require_once '../db/db.php';
-require_once 'notification.php';
+require_once '../db/db.php';
+use DB\db;
+include "../notification.php";
 session_start();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -18,38 +19,54 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (empty($errors)) {
         try {
-            // Пробуем извлечь пользователя из базы с предоставленным email
-            $sql = "SELECT id, email, password FROM users_auth WHERE email = ?";
-            $result = $db->execute_query($sql, [$email]);
-
-            // Если пользователь найден, сверяем пароли
-            if ($user = $result->fetch_assoc()) {
-                // Если пароли совпадают, сохраняем данные пользователя в сессию и редиректим на главную страницу
-                if (password_verify($password, $user['password'])) {
-                    $_SESSION['user_id'] = $user['id'];
-                    $_SESSION['email'] = $user['email'];
-
-                    header('location: /');
-                    exit;
-                }
-                // В случае несовпадения паролей выводим сообщение, что нет пользователя с такой комбинацией
-                // Не стоит выводить сообщение о том, что только пароль неверный - это усиливает уязвимость сайта к взлому
-                notify('Пользователь с такой комбинацией email и пароля не существует');
-            } else {
-                // Такое же сообщение выведем, если email неверный
-                notify('Пользователь с такой комбинацией email и пароля не существует');
+            if (!empty($db)) {
+                $sql = $db->query("SELECT * FROM users WHERE email = '$email'");
             }
-        } catch (mysqli_sql_exception $e) {
-            notify('Произошла ошибка при авторизации');
-            error_log($e->__toString());
-        } finally {
-            if (isset($db)) {
-                $db->close();
-            }
-        }
-    } else {
-        notify(implode('<br>', $errors));
+            echo $sql;
+        } catch (mysqli_sql_exception $e) {}
     }
+
+//    if (empty($errors)) {
+//        try {
+//            // Prepare the SQL statement with '?' placeholders
+//            $sql = $db->query("SELECT 'email' FROM 'users_auth' WHERE 'email' = '$email'");
+//            echo $sql;
+//
+//            if (array($sql) == 0) {
+//                echo 'no';
+//            } else {
+//                echo 'yes';
+//            }
+//var_dump($sql);
+//
+//            die();
+//
+//            $user = $result->fetch_assoc();
+//
+//            if ($user) {
+//                if (password_verify($password, $user['password'])) {
+//                    $_SESSION['user_id'] = $user['id'];
+//                    $_SESSION['email'] = $user['email'];
+//
+//                    header('location: /');
+//                    exit;
+//                } else {
+//                    notify('Неверный пароль');
+//                }
+//            } else {
+//                notify('Пользователь с таким email не найден');
+//            }
+//        } catch (error $e) {
+//            notify('Произошла ошибка при авторизации');
+//            error_log($e->__toString());
+//        } finally {
+//            if (isset($db)) {
+////                $db->close();
+//            }
+//        }
+//    } else {
+//        notify(implode('<br>', $errors));
+//    }
 }
 ?>
 
