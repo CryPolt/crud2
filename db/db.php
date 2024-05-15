@@ -39,7 +39,7 @@ class db {
     }
 }
 
-$db = new db("localhost", "crypolt", "root", "crudphp");
+$db = new db("172.20.0.3", "root", "root", "crudphp");
 
 
 

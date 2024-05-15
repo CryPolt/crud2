@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  php:
+    build: ./docker/php/
+
+
+    volumes:
+      - C:/xampp/htdocs/crud2:/app
+    ports:
+      - 8000:8000
+    command: php -S 0.0.0.0:8000 -t /app
+
+
+  db:
+    image: mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
